@@ -61,14 +61,14 @@ resource "aws_route" "route_private" {
 }
 
 resource "aws_route_table_association" "public" {
-  count = length(var.subnets_public)
+  count = length(data.terraform_remote_state.subnet.outputs.subnets_public)
 
   subnet_id      = data.terraform_remote_state.subnet.outputs.subnets_public[count.index]
   route_table_id = aws_route_table.public_rt.id
 }
 
 resource "aws_route_table_association" "private" {
-  count = length(var.availability_zones)
+  count = length(data.terraform_remote_state.subnet.outputs.availability_zones)
 
   subnet_id      = data.terraform_remote_state.subnet.outputs.subnets_private[count.index]
   route_table_id = aws_route_table.private_rt[count.index].id
