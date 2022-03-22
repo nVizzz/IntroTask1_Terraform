@@ -1,7 +1,7 @@
 data "terraform_remote_state" "subnet" {
   backend = "s3"
   config = {
-    bucket = "introtask1-terragrunt-nvizzz1"
+    bucket = "introtask1-terragrunt-nvizzz"
     key = "dev/subnet/terraform.tfstate"
     region = "us-east-1"
   }
