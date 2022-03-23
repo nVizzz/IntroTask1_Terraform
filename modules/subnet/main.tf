@@ -1,6 +1,6 @@
 data "aws_availability_zones" "working" {}
 
-data "terraform_remote_state" "s3" {
+data "terraform_remote_state" "vpc" {
   backend = "s3"
   config = {
     bucket = "introtask1-terragrunt-nvizzz"
@@ -12,7 +12,7 @@ data "terraform_remote_state" "s3" {
 resource "aws_subnet" "public" {
   count = length(var.subnets_public)
 
-  vpc_id            = data.terraform_remote_state.s3.outputs.vpc_id
+  vpc_id            = data.terraform_remote_state.vpc.outputs.vpc_id
   cidr_block        = element(var.subnets_public, count.index)
   availability_zone = element(slice(data.aws_availability_zones.working.names, 0, var.azs), count.index % var.azs)
 
@@ -22,7 +22,7 @@ resource "aws_subnet" "public" {
 resource "aws_subnet" "private" {
   count = length(var.subnets_private)
 
-  vpc_id            = data.terraform_remote_state.s3.outputs.vpc_id
+  vpc_id            = data.terraform_remote_state.vpc.outputs.vpc_id
   cidr_block        = element(var.subnets_private, count.index)
   availability_zone = element(slice(data.aws_availability_zones.working.names, 0, var.azs), count.index % var.azs)
 
