@@ -40,6 +40,7 @@ resource "aws_launch_template" "cloudx" {
   network_interfaces {
     associate_public_ip_address = var.associate_public_ip_address
     security_groups             = [data.terraform_remote_state.sg.outputs.sg_private]
+    network_card_index          = 0
   }
 
   tag_specifications {
