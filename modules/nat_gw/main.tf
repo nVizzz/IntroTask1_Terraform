@@ -8,7 +8,7 @@ data "terraform_remote_state" "subnet" {
 }
 
 resource "aws_eip" "nat-gw" {
-  count = length(var.subnets_public)
+  count = length(data.terraform_remote_state.subnet.outputs.subnets_public)
 
   vpc = true
 
@@ -17,7 +17,7 @@ resource "aws_eip" "nat-gw" {
 }
 
 resource "aws_nat_gateway" "cloudx" {
-  count = length(var.subnets_public)
+  count = length(data.terraform_remote_state.subnet.outputs.subnets_public)
 
   allocation_id = aws_eip.nat-gw["${count.index}"].id
   subnet_id     = data.terraform_remote_state.subnet.outputs.subnets_public[count.index]
