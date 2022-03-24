@@ -1,16 +1,7 @@
-data "terraform_remote_state" "vpc" {
-  backend = "s3"
-  config = {
-    bucket = "introtask1-terragrunt-nvizzz"
-    key = "dev/vpc/terraform.tfstate"
-    region = "us-east-1"
-  }
-}
-
 resource "aws_security_group" "public" {
   name        = "public"
   description = "allows access for public networks"
-  vpc_id      = data.terraform_remote_state.vpc.outputs.vpc_id
+  vpc_id      = var.vpc_id
 
 
   dynamic "ingress" {
@@ -41,7 +32,7 @@ resource "aws_security_group" "public" {
 resource "aws_security_group" "private" {
   name        = "private"
   description = "allows access for private networks"
-  vpc_id      = data.terraform_remote_state.vpc.outputs.vpc_id
+  vpc_id      = var.vpc_id
 
 
   dynamic "ingress" {
@@ -72,7 +63,7 @@ resource "aws_security_group" "private" {
 resource "aws_security_group" "private_db" {
   name        = "private_db"
   description = "allows access for private_db networks"
-  vpc_id      = data.terraform_remote_state.vpc.outputs.vpc_id
+  vpc_id      = var.vpc_id
 
 
   dynamic "ingress" {

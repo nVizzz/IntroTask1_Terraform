@@ -1,3 +1,8 @@
+variable "vpc_id" {
+  description = "VPC ID"
+  type        = string
+}
+
 variable "public_inbound" {
   description = "Rules for SG public_inbound"
   type        = map(any)

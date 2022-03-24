@@ -8,6 +8,16 @@ variable "name" {
   type        = string
 }
 
+variable "availability_zones" {
+  description = "The list of availability zones"
+  type        = list(string)
+}
+
+variable "subnets_private_db" {
+  description = "IDs of private DB subnets"
+  type        = list(string)
+}
+
 variable "allocated_storage" {
   description = "Allocated storage in GB"
   type        = number
@@ -57,6 +67,11 @@ variable "skip_final_snapshot" {
 
 variable "storage_type" {
   description = "DB storage type"
+  type        = string
+}
+
+variable "sg_private_db" {
+  description = "DB security group"
   type        = string
 }
 
